@@ -1,0 +1,19 @@
+
+[0m[0m
+[0m  #escape[0m
+[2K[0G  [32m  √[0m[90m converts & into &amp;[0m
+[2K[0G  [32m  √[0m[90m converts " into &quot;[0m
+[2K[0G  [32m  √[0m[90m converts ' into &#39;[0m
+[2K[0G  [32m  √[0m[90m converts < into &lt;[0m
+[2K[0G  [32m  √[0m[90m converts > into &gt;[0m
+
+[0m  #unescape[0m
+[2K[0G  [32m  √[0m[90m converts &amp; into &[0m
+[2K[0G  [32m  √[0m[90m converts &quot; into "[0m
+[2K[0G  [32m  √[0m[90m converts &#39; into '[0m
+[2K[0G  [32m  √[0m[90m converts &lt; into <[0m
+[2K[0G  [32m  √[0m[90m converts &gt; into >[0m
+
+
+[92m [0m[32m 10 passing[0m[90m (21ms)[0m
+
