@@ -36,30 +36,25 @@ var Compiler = function(grunt, options, cwd) {
    * @param  {String} url       URL to act as template ID
    * @return {String}           Template wrapped in `$templateCache.put(...)`
    */
-  this.cache = function(template, url, prefix, languagesTranslations, availableLanguages) {
+  this.cache = function(template, url, prefix, translations) {
     var templates = '';
-    availableLanguages.forEach(function(language) {
-      console.dir(language);
-      var path = prefix + language + '/';
-
-      // Force trailing slash
-      if (path.length) {
-        path = path.replace(/\/?$/, '/');
-      }
-
-      // Append formatted URL
-      path += Url.format( Url.parse( url.replace(/\\/g, '/') ) );
-
-      var re = /{{([^%>]+)?}}/g, match;
-      while(match = re.exec(template)) {
-        console.dir(languagesTranslations[language]);
-        var translation = JSON.parse(languagesTranslations[language]);
-        template = template.replace(match[0], translation[match[1]])
-      }
-
-      templates += "\n  $templateCache.put('" + path + "',\n    " + template + "\n  );\n";
+    Object.keys(translations).forEach(function(languageKey) {
+      var path = this.preparePath(prefix + languageKey + '/', url);
+      var translatedTemplate = this.translateTemplate(template, translations[languageKey]);
+      templates += "\n  $templateCache.put('" + path + "',\n    " + translatedTemplate + "\n  );\n";
     }, this);
     return templates;
+  };
+
+  this.preparePath = function(path, url) {
+    // Force trailing slash
+    if (path.length) {
+      path = path.replace(/\/?$/, '/');
+    }
+    // Append formatted URL
+    path += Url.format( Url.parse( url.replace(/\\/g, '/') ) );
+
+    return path;
   };
 
   /**
@@ -68,7 +63,7 @@ var Compiler = function(grunt, options, cwd) {
    * @param  {Array} files    List of files relative to `cwd`
    * @return {String}         Final template aggregate script
    */
-  this.compile = function(module, files, languagesTranslations, availableLanguages) {
+  this.compile = function(module, files, translations) {
     var paths = files.map(this.path).filter(function(path) {
       if (!grunt.file.exists(path)) {
         grunt.log.warn('Template "' + path + '" not found.');
@@ -88,7 +83,7 @@ var Compiler = function(grunt, options, cwd) {
       }.bind(this))
       .map(this.stringify)
       .map(function(string, i) {
-        return this.cache(string, this.url(files[i]), options.prefix, languagesTranslations, availableLanguages);
+        return this.cache(string, this.url(files[i]), options.prefix, translations);
       }.bind(this))
       .map(grunt.util.normalizelf)
       .join(grunt.util.linefeed)
@@ -171,18 +166,19 @@ var Compiler = function(grunt, options, cwd) {
     return modules;
   };
 
-  this.availableLanguages = function(languageFiles) {
-    var availableLanguages = [];
-    languageFiles.forEach(function(language) {
-      var splittedLanguage = language.split('/');
-      var filename = splittedLanguage[splittedLanguage.length - 1];
-      var languageName = filename.split('.')[0];
+  this.translateTemplate = function(template, translations) {
+    var regularExpression = /{{([^%>]+)?}}/g;
 
-      availableLanguages.push(languageName);
+    return template.replace(regularExpression, function(match, p1) {
+      if (p1.indexOf('.') >= 0) {
+        var pathToVariable = p1;
+        return pathToVariable.split('.').reduce(function(prev, curr) {
+          return (prev ? prev[curr] : undefined)
+        }, translations || this);
+      }
+      return translations[p1];
     }, this);
-
-    return availableLanguages;
-  }
+  };
 
   this.languages = function(languageFiles) {
     var languages = {};
@@ -193,7 +189,7 @@ var Compiler = function(grunt, options, cwd) {
 
       var languageName = filename.split('.')[0];
 
-      languages[languageName] = this.load(language);
+      languages[languageName] = JSON.parse(grunt.file.read(language));
     }, this);
 
     return languages;

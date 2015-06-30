@@ -1,4 +1,12 @@
 {
   "title": "Vertalen",
-  "description": "Dit zou vertaald moeten worden in meerdere talen"
+  "description": "Dit zou vertaald moeten worden in meerdere talen",
+  "developer": {
+    "title": "De developer titel",
+    "intro": "De developer intro",
+    "paragraphs": {
+      "first": "<p>Dit is de eerste paragraaf</p>",
+      "second": "<p>Dit is de tweede paragraaf</p>"
+    }
+  }
 }

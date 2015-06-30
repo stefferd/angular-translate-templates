@@ -41,14 +41,12 @@ module.exports = function(grunt) {
 
       var compiler  = new Compiler(grunt, options, file.cwd);
       var appender  = new Appender(grunt);
-      var availableLanguages = compiler.availableLanguages(file.languages);
-      var langaugesTranslations = compiler.languages(file.languages);
+      var translations = compiler.languages(file.languages);
       var modules   = compiler.modules(file.src);
       var compiled  = [];
 
       for (var module in modules) {
-        console.dir(langaugesTranslations);
-        compiled.push(compiler.compile(module, modules[module], langaugesTranslations, availableLanguages));
+        compiled.push(compiler.compile(module, modules[module], translations));
         //compiled.push(compiler.compile(module, modules[module], []));
       }
 

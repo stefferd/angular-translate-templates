@@ -21,6 +21,19 @@ module.exports = function(grunt) {
         options: {
           angular: 'myAngular'
         }
+      },
+      multiplelevels: {
+        src: ['test/templates/test_multiplelevels.html'],
+        languages: ['test/resources/en.json', 'test/resources/nl.json'],
+        dest: 'tmp/custom_multiplelevels.js'
+      },
+      multpleTemplates: {
+        src: ['test/templates/test_multiplelevels.html', 'test/templates/template.html'],
+        languages: ['test/resources/en.json', 'test/resources/nl.json'],
+        dest: 'tmp/custom_multipleTemplates.js',
+        options: {
+          module: 'customModuleName'
+        }
       }
     }
   });
