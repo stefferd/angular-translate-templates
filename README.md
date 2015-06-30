@@ -125,7 +125,7 @@ Defaults to `''`
 If you need to use absolute urls:
 
 ```js
-ngtemplates: {
+ngtranslatetemplates: {
   app: {
     options: {
       prefix: '/'
@@ -210,7 +210,7 @@ what the destination file is actually called.
 ```js
 concat:   {
   app:    {
-    src:  [ '**.js', '<%= ngtemplates.app.dest %>' ],
+    src:  [ '**.js', '<%= ngtranslatetemplates.app.dest %>' ],
     dest: [ 'app.js' ]
   }
 }
@@ -232,7 +232,7 @@ object behind the scenes.  Instead, use the `usemin` option to indicate the anti
 output filepath from grunt-usemin.
 
 ```js
-ngtemplates:  {
+ngtranslatetemplates:  {
   app:        {
     src:      '**.html',
     dest:     'template.js',
@@ -254,7 +254,7 @@ I'm back-tracking the proper `concat` target for you.
 ### Register HTML Templates in `app` Module
 
 ```js
-ngtemplates:  {
+ngtranslatetemplates:  {
   app:        {
     src:      '**.html',
     dest:     'templates.js',
@@ -270,7 +270,7 @@ Normally, your app, templates, & server are in separate folders, which means
 that the template URL is **different** from the file path.
 
 ```js
-ngtemplates:  {
+ngtranslatetemplates:  {
   app:        {
     cwd:      'src/app',
     src:      'templates/**.html',
@@ -289,7 +289,7 @@ This will store the template URL as `templates/home.html` instead of
 Simply pass the [same options][2] as the `htmlmin` task:
 
 ```js
-ngtemplates:    {
+ngtranslatetemplates:    {
   app:          {
     src:        '**.html',
     dest:       'templates.js',
@@ -304,7 +304,7 @@ ngtemplates:    {
 Or, if you already have an existing `htmlmin` task, you can reference it:
 
 ```js
-ngtemplates:    {
+ngtranslatetemplates:    {
   app:          {
     src:        '**.html',
     dest:       'templates.js',
@@ -319,13 +319,13 @@ ngtemplates:    {
 
 ### Customize Template URL
 
-Suppose you only use `ngtemplates` when on production, but locally you serve
+Suppose you only use `ngtranslatetemplates` when on production, but locally you serve
 templates via Node, sans the `.html` extension.
 
 You can specify a `url` callback to further customize the registered URL:
 
 ```js
-ngtemplates:  {
+ngtranslatetemplates:  {
   app:        {
     src:      '**.html',
     dest:     'templates.js',
@@ -344,7 +344,7 @@ Some people like [AMD & RequireJS][3] and would like wrap the output
 in AMD or something else (don't ask me why!):
 
 ```js
-ngtemplates:      {
+ngtranslatetemplates:      {
   app:            {
     src:          '**.html',
     dest:         'templates.js',
