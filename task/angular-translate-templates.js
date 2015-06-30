@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     return options.angular+".module('"+module+"'"+(options.standalone ? ', []' : '')+").run(['$templateCache', function($templateCache) {\n"+script+"\n}]);\n";
   };
 
-  var ngTranslateTemplates = function() {
+  var ngtranslatetemplatesTask = function() {
     var options = this.options({
       angular:    'angular',
       bootstrap:  bootstrapper,
@@ -74,6 +74,6 @@ module.exports = function(grunt) {
     });
   };
 
-  grunt.registerMultiTask('ngtranslatetemplates', 'Compile AngularJS templates with languages for $templateCache', ngTranslateTemplates);
+  grunt.registerMultiTask('ngtranslatetemplates', 'Compile AngularJS templates with languages for $templateCache', ngtranslatetemplatesTask);
 
 };
