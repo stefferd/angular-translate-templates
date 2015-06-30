@@ -1,9 +1,6 @@
+'use strict';
+
 module.exports = function(grunt) {
-  'use strict';
-  // Load all grunt tasks
-  require('load-grunt-tasks')(grunt);
-  // Show elapsed time at the end
-  require('time-grunt')(grunt);
 
   // Project configuration.
   grunt.initConfig({
@@ -39,13 +36,16 @@ module.exports = function(grunt) {
   });
 
   grunt.loadTasks('task');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
+  grunt.registerTask(
+    'default',
+    ['ngtranslatetemplates']
+  );
 
   grunt.registerTask(
     'test',
-    [
-      'ngtranslatetemplates',
-      'nodeunit'
-    ]
-  );
+    ['ngtranslatetemplates', 'nodeunit']
+  )
 
 };
