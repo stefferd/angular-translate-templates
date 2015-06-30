@@ -167,7 +167,7 @@ var Compiler = function(grunt, options, cwd) {
   };
 
   this.translateTemplate = function(template, translations) {
-    var regularExpression = /{{([^%>]+)?}}/g;
+    var regularExpression = /<%([^%>]+)?%>/g;
 
     return template.replace(regularExpression, function(match, p1) {
       if (p1.indexOf('.') >= 0) {
