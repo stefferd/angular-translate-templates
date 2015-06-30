@@ -1,6 +1,6 @@
 {
   "name": "angular-translate-templates",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Language specific rendering of the templates for angular",
   "main": "Gruntfile.js",
   "engines": {
